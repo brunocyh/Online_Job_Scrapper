@@ -361,7 +361,6 @@ if __name__ == "__main__":
     search_terms = ['software engineering', 'data science', 'programmer', 'developer','python','graduate developer', 'part time developer']
     locations = ['brisbane']
     stop_words = ['senior','manager','director','postdoctoral','doctoral','experienced','clerk']
-    key_words = ['junior','intern','assistance','python','java','c#','part','contract']
     concern_key_words = ['citizen', 'pr', 'permanent', 'resident', 'years', 'experienced', 'cover letter', 'ethic', 'stress', 'multinational','visa','right','must','only','lead','mentor']
     
     # ----- End customizing -----
@@ -376,7 +375,7 @@ if __name__ == "__main__":
         result.export_csv('job_dataset/{}.csv'.format(f_name))
         
     res = input("Job search completed!! Do you wish to analyse job discription? Press 'N' to exit (any to continue)... ")
-    if res == 'N' or res != 'n':
+    if res == 'N' or res == 'n':
         exit()
     
     # 2. Content analysing...

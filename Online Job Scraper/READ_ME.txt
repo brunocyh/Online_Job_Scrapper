@@ -1,7 +1,7 @@
 ---- Disclaimer!! ----
 This algorithm is violent in nature, it is definietly not for commercial use and it is not build for that 
 purpose. It is build for personal / educational usage only by Bruno. The author will NOT be responsible for
-any losses / legal issues involved in the use of it. 
+any losses / legal issues involved in the use of it. Please inform me if this algorithm impact any stakeholders, I will delete it from cloud immediately. 
 @Copyright retained by Bruno Cheung, 2018
 
 ---- What is it? ----
