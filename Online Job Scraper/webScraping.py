@@ -79,7 +79,7 @@ def crawl_indeed(term, location): ##
     list_jobs = storageStructure()
     b_name = 'Indeed'
     print('Now searching {} from {} ...'.format(term, b_name))
-    page = ['','&start=10','&start=20','&start=30','&start=40'] # say, 30 results for indeed
+    page = ['','&start=10','&start=20','&start=30','&start=40','&start=50','&start=60'] # say, 30 results for indeed
     for page, i in enumerate(page):
         
         # url processing
@@ -122,7 +122,7 @@ def crawl_SEEK(term, location): ##
     list_jobs = storageStructure()
     b_name = 'SEEK'
     print('Now searching {} from {} ...'.format(term, b_name))
-    page = ['','&page=2', '&page=3', '&page=4'] # say, 30 results for indeed
+    page = ['','&page=2', '&page=3', '&page=4','&page=5','&page=6','&page=7'] # say, 30 results for indeed
     for page, i in enumerate(page):
         
         # url processing
@@ -160,7 +160,7 @@ def crawl_neuvoo(term, location): ##
     list_jobs = storageStructure()
     b_name = 'Neuvoo'
     print('Now searching {} from {} ...'.format(term, b_name))
-    page = ['','2', '3', '4'] # say, 30 results for indeed
+    page = ['','2', '3', '4','5','6'] # say, 30 results for indeed
     for page, i in enumerate(page):
         
         # url processing
@@ -198,7 +198,7 @@ def crawl_gumtree(term, location):
     list_jobs = storageStructure()
     b_name = 'Gumtree'
     print('Now searching {} from {} ...'.format(term, b_name))
-    page = ['','page-2/', 'page-3/'] # say, 30 results for indeed
+    page = ['','page-2/', 'page-3/','page-4/','page-5/'] # say, 30 results for indeed
     for page, i in enumerate(page):
         
         # url processing
@@ -237,7 +237,7 @@ def crawl_linkedIn(term, location):
     list_jobs = storageStructure()
     b_name = 'LinkedIn'
     print('Now searching {} from {} ...'.format(term, b_name))
-    page = ['','&start=25', '&start=50'] 
+    page = ['','&start=25', '&start=50', '&start=75'] 
     browser = webdriver.Chrome()
     
     for page, i in enumerate(page):
@@ -356,15 +356,19 @@ class storageStructure(object):
 if __name__ == "__main__":    
 
     # ----- Customize Parameters -----\
+    #search_terms = ['part time','data entry','barista','junior'] ## casual
+    search_terms = ['software engineering', 'internship developer', 'data science', 'programmer', 'developer','python','graduate developer', 'part time developer','junior developer','data analyst']
     
-    #search_terms = ['part time developer'] ## Testing
-    search_terms = ['software engineering', 'data science', 'programmer', 'developer','python','graduate developer', 'part time developer']
     locations = ['brisbane']
-    stop_words = ['senior','manager','director','postdoctoral','doctoral','experienced','clerk']
-    concern_key_words = ['citizen', 'pr', 'permanent', 'resident', 'years', 'experienced', 'cover letter', 'ethic', 'stress', 'multinational','visa','right','must','only','lead','mentor']
+    stop_words = ['senior','manager','director','postdoctoral','doctoral','experienced']
+    concern_key_words = ['citizen', 'pr', 'permanent', 'resident', 'years', 'experienced', 'ethic', 'stress', 'multinational','visa','right','must','only','lead','mentor', 'python']
+    
+    print('----------------- INFO -------------------')
+    print('Locations: {}'.format(locations))
+    print('Stop words: {}'.format(stop_words))
+    input('You are searching for {}, continue...'.format(search_terms))
     
     # ----- End customizing -----
-    
     for loc in locations:
         # 1. Job crawling...
         print('Crawling jobs from ' + loc)
@@ -374,6 +378,8 @@ if __name__ == "__main__":
         f_name = '{}_jobs{}'.format(loc, tstmp)
         result.export_csv('job_dataset/{}.csv'.format(f_name))
         
+    j_count = len(result)
+    print("{} jobs are found".format(j_count))
     res = input("Job search completed!! Do you wish to analyse job discription? Press 'N' to exit (any to continue)... ")
     if res == 'N' or res == 'n':
         exit()
@@ -382,8 +388,14 @@ if __name__ == "__main__":
     import lib.contentAnalysing as ca
     print('Begin crawling job details in {}'.format(loc))
     result2 = ca.crawler(concern_key_words, 'job_dataset/{}.csv'.format(f_name))
-    result2.crawl_content()
-    result2.export_csv('job_dataset/{}_analysed.csv'.format(f_name))
+    
+    try: 
+        result2.crawl_content(j_count)
+        result2.export_csv('job_dataset/{}_analysed.csv'.format(f_name))    
+        
+    except Exception as e:
+        input(e)
+        exit()
         
     input("Job hunt done, go chase your dream!!")
         
