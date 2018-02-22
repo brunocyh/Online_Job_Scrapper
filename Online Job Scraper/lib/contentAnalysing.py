@@ -224,5 +224,9 @@ if __name__ == "__main__":
     
     result2 = crawler(k_words, f_name)
     result2.crawl_content()
+<<<<<<< HEAD
     result2.export_csv('../job_dataset/{}_analysed.csv'.format(f_name))        
+=======
+    result2.export_csv('../job_dataset/{}_analysed.csv'.format(f_name)) 
+>>>>>>> 50cdf9008895c0e60c32ee8ef0e66ca61d4dff6f
     input("Analysing completed! Press anything to exit...")
