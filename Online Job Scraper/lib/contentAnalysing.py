@@ -23,7 +23,7 @@ class crawler(object):
         self.df = pd.read_csv(f_name, encoding=r['encoding'])
         self.df['Words_of_concern'] = ''
     
-    def crawl_content(self):
+    def crawl_content(self, j_count = None):
         """
         - traverse DF
         - detect which jobboard
@@ -32,26 +32,36 @@ class crawler(object):
         - next job
         """
         for i, row in self.df.iterrows():
-            print('Analysing ' + str(row.Job_title) + ' at ' + str(row.Company) + ' -- Job number:'+ str(i))            
             
-            # html crawling
-            url = row.URL
-            engine = row.Search_eng
-            w_bag = self._auto_crawl(engine, url)
-            
-            if w_bag != 'Error occured':
-                w_bag = word_tokenize(w_bag)
+            try:
+                if j_count == None: 
+                    print('Job: {} -- Analysing {} at {}...'.format(str(i+1), str(row.Job_title), str(row.Company)))
+                else:
+                    print('Progress: {}/{} ({}%) -- Analysing {} at {}...'.format(str(i+1), str(j_count), str(round((i+1)*100/j_count)), str(row.Job_title), str(row.Company)))
                 
-                # word processing
-                w_bag = self._stem(w_bag)
-                exist_kwords = self._find_kwords(w_bag)
-            else:
-                woc = "*Error scrapping"
+                # html crawling
+                url = row.URL
+                engine = row.Search_eng
+                w_bag = self._auto_crawl(engine, url)
+                
+                if w_bag != 'Error occured':
+                    w_bag = word_tokenize(w_bag)
+                    
+                    # word processing
+                    w_bag = self._stem(w_bag)
+                    exist_kwords = self._find_kwords(w_bag)
+                else:
+                    woc = "*Error scrapping"
+                
+                # modify df
+                woc = exist_kwords.strip(" &")
+                if woc == "": woc = '*No found'            
+                self.df.at[i,"Words_of_concern"] = woc
             
-            # modify df
-            woc = exist_kwords.strip(" &")
-            if woc == "": woc = '*No found'            
-            self.df.at[i,"Words_of_concern"] = woc
+            except Exception as e:
+                print(e)
+                self.df.at[i,"Words_of_concern"] = '*Error {}'.format(e)
+            
     
     def export_csv(self, f_name):
         self.df.to_csv(f_name, index=False)
@@ -209,9 +219,10 @@ class crawler(object):
 if __name__ == "__main__":
     # used only when jobs are found
     f_name = input("Please enter the name of the job file: ")    
-    #f_name = "../job_dataset/brisbane_jobs_testing.csv"
-    k_words = ['citizen', 'pr', 'permanent', 'resident', 'years', 'experienced', 'cover letter', 'ethic', 'stress', 'multinational','visa','right','must','only']
+    #f_name = "../job_dataset/brisbane_jobs_testing.csv"    
+    k_words = ['citizen', 'citizenship', 'permanent', 'resident', 'years', 'experienced', 'cover letter', 'ethic', 'stress', 'multinational','visa','right','must','only']
+    
     result2 = crawler(k_words, f_name)
     result2.crawl_content()
-    result2.export_csv('../job_dataset/{}_analysed.csv'.format(f_name))
+    result2.export_csv('../job_dataset/{}_analysed.csv'.format(f_name))        
     input("Analysing completed! Press anything to exit...")
