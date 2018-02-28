@@ -1,8 +1,9 @@
 ---- Disclaimer!! ----
 This algorithm is violent in nature, it is definietly not for commercial use and it is not build for that 
 purpose. It is build for personal / educational usage only by Bruno. The author will NOT be responsible for
-any losses / legal issues involved in the use of it. Please inform me if this algorithm impact any stakeholders, I will delete it from cloud immediately. 
-@Copyright retained by Bruno Cheung, 2018
+any losses / legal issues involved in the use of it. Please inform me if this algorithm impact any stakeholders, 
+I will delete it from cloud immediately. 
+Please be aware that polite policy is adopted, it will perform 1 request in approx 5 secs
 
 ---- What is it? ----
 So this is a web crawler that crawls through the mainstream jobboards in Australia. Eh.. so why do I want to spend my entire weekend building this thing? I have a few problems faced when I started looking jobs online...
@@ -39,6 +40,6 @@ I am a data scientist thus I enjoy traversing jobs (to me, data of interest) in 
 Name: Online Job Scraper v2.3.0
 Python version: 3.6
 pandas
-beautifulsoap4
+bs4
 nltk
 selenium

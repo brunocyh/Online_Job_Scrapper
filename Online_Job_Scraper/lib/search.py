@@ -10,6 +10,9 @@ How to maintain this class:
     - make sure it works properly: by checking whether every website works normally (tags, class...)
     - if mulfunction, send user message but run others normally
     - mulfunction defines as: returns []
+    
+Polite Policy:
+    - crawl delay applied (5-7 sec)
 """
 
 #from selenium import webdriver
@@ -17,7 +20,8 @@ from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 import lib.data_structure as d_structure
 import re
-
+import time
+from random import randint
 
 class Search(object):
     """
@@ -39,7 +43,7 @@ class Search(object):
         
         returns: a storage structure object
         """
-        print('**Please be noted that this is a brute force search on multiple jobboards (which is not very welcomed by most website. I built it for personal usage only so I will bear NO legal liability k?). Bruno**')
+        print('**Please be noted that this is a brute force search on multiple jobboards. I have applied crawler polite policy, make sure it is there to show some respects to web-owners. **')
         #n_terms = input('\n Please input more search terms? Format: ["developer","java engineer",...]: ')
         #search_terms.extend(n_terms)
         
@@ -49,26 +53,26 @@ class Search(object):
             
             try:
                 job_data.add_datas(self.crawl_indeed(term, self.location))
-            except:
-                print('Error while searching {} with {}'.format(term, 'Indeed'))
+            except Exception as e:
+                print('Error while searching {} with {}; {}'.format(term, 'Indeed', e))
                 pass
             
             try:
                 job_data.add_datas(self.crawl_SEEK(term, self.location))
             except Exception as e:
-                print('Error while searching {} with {}'.format(term, 'SEEK'))
+                print('Error while searching {} with {}; {}'.format(term, 'SEEK', e))
                 pass
             
             try:
                 job_data.add_datas(self.crawl_neuvoo(term, self.location))
-            except:
-                print('Error while searching {} with {}'.format(term, 'Neuvoo'))
+            except Exception as e:
+                print('Error while searching {} with {}; {}'.format(term, 'Neuvoo', e))
                 pass
             
             try:
                 job_data.add_datas(self.crawl_gumtree(term, self.location))
-            except:
-                print('Error while searching {} with {}'.format(term, 'Neuvoo'))
+            except Exception as e:
+                print('Error while searching {} with {}; {}'.format(term, 'Gumtree', e))
                 pass
             
         # return to a data structure format, where it is sorted by post date
@@ -85,12 +89,15 @@ class Search(object):
     
     
     def crawl_indeed(self, term, location): ##
-        #  Job: indeed
+        #  Job: indeed        
         list_jobs = d_structure.storageStructure(self.stop_words)
         b_name = 'Indeed'
         print('Now searching {} from {} ...'.format(term, b_name))
         page = ['','&start=10','&start=20','&start=30','&start=40','&start=50','&start=60'] # say, 30 results for indeed
         for page, i in enumerate(page):
+            
+            # polite policy -- delay
+            time.sleep(randint(5,8))            
             
             # url processing
             k_words = term.replace(" ", "-")
@@ -129,11 +136,15 @@ class Search(object):
     
     def crawl_SEEK(self, term, location): ##
         #  Job: seek
+        # Policy: allows * crawlers for job search
         list_jobs = d_structure.storageStructure(self.stop_words)
         b_name = 'SEEK'
         print('Now searching {} from {} ...'.format(term, b_name))
         page = ['','&page=2', '&page=3', '&page=4','&page=5','&page=6','&page=7'] # say, 30 results for indeed
         for page, i in enumerate(page):
+            
+            # polite policy -- delay
+            time.sleep(randint(5,8))              
             
             # url processing
             k_words = term.replace(" ", "-")
@@ -177,6 +188,9 @@ class Search(object):
         page = ['','2', '3', '4','5','6'] # say, 30 results for indeed
         for page, i in enumerate(page):
             
+            # polite policy -- delay
+            time.sleep(randint(5,8))      
+            
             # url processing
             k_words = term.replace(" ", "+")
             domain = 'https://au.neuvoo.com'
@@ -215,6 +229,9 @@ class Search(object):
         page = ['','page-2/', 'page-3/','page-4/','page-5/'] # say, 30 results for indeed
         for page, i in enumerate(page):
             
+            # polite policy -- delay
+            time.sleep(randint(5,8))  
+            
             # url processing
             k_words = term.replace(" ", "-")
             domain = 'https://www.gumtree.com.au'
@@ -244,48 +261,4 @@ class Search(object):
                 if page == 0: print("No result returned from {}, with term {}".format(b_name, term))
                 break
                 
-        return list_jobs.return_list()
-    
-    def crawl_linkedIn(self, term, location):
-        # Depreciated...
-        #  Job: LinkedIn... But required logging in; This is risky
-        
-        list_jobs = d_structure.storageStructure(self.stop_words)
-        b_name = 'LinkedIn'
-        print('Now searching {} from {} ...'.format(term, b_name))
-        page = ['','&start=25', '&start=50', '&start=75'] 
-        browser = webdriver.Chrome()
-        
-        for page, i in enumerate(page):
-            # url processing
-            k_words = term.replace(" ", "%20")
-            domain = 'https://www.linkedin.com'
-            url = '/jobs/search/?country=au&countryCode=au&keywords={}&location={}%2C%20Australia&locationId=au%3A4909&sortBy=DD' + i
-            url = domain + url.format(k_words, location)
-            
-            # avoid linkedIn block / parse html
-            browser.get(url)
-            page_soup = soup(browser.page_source, 'html.parser')
-            browser.quit()        
-        
-            # find all job titles
-            containers = page_soup.findAll("div",{'class':'job-details'})
-            
-            for job in containers:
-                
-                # mapping
-                date = page ##
-                j_title = job.h2.text ##
-                company = job.find_all('div',{'class':'company-name'})[0].text 
-                loc = 'na'
-                s_eng = b_name ##
-                term = term ##
-                u_link = domain + job.h2.a['href'] ##
-                list_jobs.add_data(date, j_title, company, loc, s_eng, term, u_link)
-        
-            # Break if no result is returned from the first page
-            if len(containers) == 0:
-                if page == 0: print("No result returned from {}, with term {}".format(b_name, term))
-                break
-                
-        return list_jobs.return_list()        
+        return list_jobs.return_list() 

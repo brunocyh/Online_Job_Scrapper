@@ -49,7 +49,7 @@ class Alarm(object):
                 
             retn = s[c]
         else:
-            retn = s[0]
+            retn = s[3]
         
         return retn
     

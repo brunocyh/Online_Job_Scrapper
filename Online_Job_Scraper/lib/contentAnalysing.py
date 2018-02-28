@@ -10,6 +10,8 @@ from nltk import word_tokenize
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 import chardet
+from random import randint
+import time
 
 class crawler(object):
     def __init__(self, key_words, f_name):
@@ -33,11 +35,17 @@ class crawler(object):
         """
         for i, row in self.df.iterrows():
             
+            # polite policy -- delay
+            dely = randint(4,7)
+            time.sleep(dely)
+            
             try:
                 if j_count == None: 
-                    print('Job: {} -- Analysing {} at {}...'.format(str(i+1), str(row.Job_title), str(row.Company)))
+                    print('Job: {} -- Analysing {} at {}; delay {}sec...'.format(str(i+1), str(row.Job_title), str(row.Company), str(dely)))
                 else:
-                    print('Progress: {}/{} ({}%) -- Analysing {} at {}...'.format(str(i+1), str(j_count), str(round((i+1)*100/j_count)), str(row.Job_title), str(row.Company)))
+                    print('Progress: {}/{} ({}%) -- Analysing {} at {}; delay {}sec...'.format(str(i+1), str(j_count), str(round((i+1)*100/j_count)), str(row.Job_title), str(row.Company), dely))
+                
+                
                 
                 # html crawling
                 url = row.URL
