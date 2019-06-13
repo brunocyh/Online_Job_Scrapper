@@ -20,7 +20,7 @@ class IJobDatabase(ABC):
     def commit(self): pass
 
     @abstractmethod
-    def reset_table(self): pass
+    def reset_table(self, passcode): pass
 
     @abstractmethod
     def create_data(self, key_pair: dict): pass
@@ -42,6 +42,7 @@ class JobDatabase(IJobDatabase):
     cursor = None
     db_name = "Database/Job.db"
     table_name = "job_table"
+    passcode = "4321"
 
     @staticmethod
     def instantiate_Database() -> IJobDatabase:
@@ -71,7 +72,10 @@ class JobDatabase(IJobDatabase):
         self.conn.commit()
         return True
 
-    def reset_table(self):
+    def reset_table(self, passcode):
+        print('I hope you know what you are doing...')
+        if passcode == self.passcode:
+            raise Exception('Wrong password, db reset request declined')
         cmd = []
         cmd.append("DROP TABLE IF EXISTS {};".format(self.table_name))
         cmd.append("CREATE TABLE {} (Page text, Job_title text, Company text, Location text, Search_eng text,\
