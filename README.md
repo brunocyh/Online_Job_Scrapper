@@ -3,8 +3,9 @@ The story: I was graduated in Brisbane 2017 December, as an international studen
 
 2018 version:
 - Does the job
+- Focus on job hunts in Australia
 - Acheivement: saved me heaps of time in browsing various jobboards; also landed me internship and eventually a software engineer position
 
 2019 version:
 - improve architecture of the overall software, extensible for other application
-- 
+- more countries supported: AU, HK, SG
