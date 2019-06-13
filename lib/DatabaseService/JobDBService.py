@@ -72,17 +72,18 @@ class JobDatabase(IJobDatabase):
         return True
 
     def reset_table(self):
-        # TODO: to be tested
-        cmd = "CREATE TABLE {} (Page text, Job_title text, Company text, Location text, Search_eng text,\
-               Term text, URL text, Words_of_concern text)".format(self.table_name)
-        self.cursor.execute(cmd)
+        cmd = []
+        cmd.append("DROP TABLE IF EXISTS {};".format(self.table_name))
+        cmd.append("CREATE TABLE {} (Page text, Job_title text, Company text, Location text, Search_eng text,\
+            Term text, URL text, Words_of_concern text)".format(self.table_name))
+        
+        [self.cursor.execute(c) for c in cmd]
         return True
-    
+
     def _sql(self, sql):
         return self.cursor.execute(sql)
 
     def create_data(self, key_pair: dict):
-        # TODO: to be tested
         try:
             cmd = "INSERT INTO {} VALUES ('{}','{}','{}','{}','{}','{}','{}','{}')".format(self.table_name,
                                                                                            key_pair['Page'],
@@ -99,24 +100,31 @@ class JobDatabase(IJobDatabase):
         except Exception as e:
             raise e
 
-    def read_all_data(self, columns: "list of strings"):
-        # TODO: to be tested
+    def read_all_data(self, columns: "list of strings") -> "iterator":
         try:
             columns_str = ""
-            for word in columns:
-                columns_str = columns_str + " " + word
+            for counter, word in enumerate(columns):
+                if counter >= 1:
+                    columns_str = columns_str + ", " + word
+                
+                else:
+                    columns_str = word
+                    
 
             cmd = "SELECT {} FROM {}".format(columns_str, self.table_name)
-            self.cursor.execute(cmd)
-            return True
+            print(cmd)
+            return self.cursor.execute(cmd)
 
         except Exception as e:
             raise e
 
-    def update_analysed_data(self):
-        # TODO: to be continued
+    def update_analysed_data(self, conditions: tuple, key_pair: tuple):
         try:
-            cmd = "UPDATE {} SET {} = '{}', {} = '{}' WHERE {};"
+            cmd = "UPDATE {} SET {} = '{}' WHERE {} = '{}';".format(self.table_name,
+                                                                    conditions[0],
+                                                                    conditions[1],
+                                                                    key_pair[0],
+                                                                    key_pair[1])
             self.cursor.execute(cmd)
             return True
 
