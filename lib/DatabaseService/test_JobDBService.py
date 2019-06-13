@@ -28,7 +28,5 @@ def test_sql():
 
     assert False
 
-
-@pytest.mark.focus
 def test_insert_item():
     pass

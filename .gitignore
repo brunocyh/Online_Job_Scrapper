@@ -1,3 +1,5 @@
-.vscode/*
+.vscode/
 */.idea
-Job.db
+*.pytest_cache/
+*__pycache__/
+Database/

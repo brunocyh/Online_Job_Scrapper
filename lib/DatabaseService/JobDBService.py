@@ -40,7 +40,7 @@ class JobDatabase(IJobDatabase):
     __instance = None
     conn = None
     cursor = None
-    db_name = "Job.db"
+    db_name = "Database/Job.db"
     table_name = "job_table"
 
     @staticmethod
