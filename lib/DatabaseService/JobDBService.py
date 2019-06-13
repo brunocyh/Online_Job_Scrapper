@@ -23,13 +23,13 @@ class IJobDatabase(ABC):
     def reset_table(self): pass
 
     @abstractmethod
-    def create_data(self): pass
+    def create_data(self, key_pair: dict): pass
 
     @abstractmethod
     def read_all_data(self, columns): pass
 
     @abstractmethod
-    def update_analysed_data(self): pass
+    def update_analysed_data(self, conditions: tuple, key_pair: tuple): pass
 
     @abstractmethod
     def delete_data(self): pass
