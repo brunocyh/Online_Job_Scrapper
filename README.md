@@ -8,7 +8,7 @@ Early-2018 version:
 - Acheivement: saved me heaps of time in browsing various jobboards; also landed me internship and eventually a software engineer position
 
 Mid-2019 version:
-- Refactor the entire architecture, extensible for other application
+- Refactored the entire architecture, extensible for other application
 - Enhance performance
 - Unit tests included
 - Additional jobboard support: Stackoverflow
