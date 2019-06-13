@@ -4,10 +4,12 @@ The story: I was graduated in Brisbane 2017 December, as an international studen
 Early-2018 version:
 - Does the job (polite policy applies! I hate spamming web hosts)
 - Focus on job hunts in Australia
+- Supports -- AU: Neuvoo, Seek, Gumtree, Indeed
 - Acheivement: saved me heaps of time in browsing various jobboards; also landed me internship and eventually a software engineer position
 
 Mid-2019 version:
 - Refactor the entire architecture, extensible for other application
 - Enhance performance
 - Unit tests included
-- More countries supported: AU, HK, SG
+- Additional jobboard support: Stackoverflow
+- Additional countries supported: HK, SG
