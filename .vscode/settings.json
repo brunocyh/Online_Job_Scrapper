@@ -1,3 +1,16 @@
 {
-    "python.pythonPath": "/anaconda3/bin/python"
+    "python.pythonPath": "/anaconda3/bin/python",
+    "python.testing.pyTestArgs": [
+        "."
+    ],
+    "python.testing.unittestEnabled": true,
+    "python.testing.nosetestsEnabled": true,
+    "python.testing.pyTestEnabled": true,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py"
+    ]
 }

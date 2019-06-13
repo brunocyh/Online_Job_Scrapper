@@ -1,0 +1,6 @@
+[
+  "lib/DatabaseService/test_test.py::test_instantiate",
+  "lib/DatabaseService/test_test.py::test_reset_table",
+  "lib/DatabaseService/test_test.py::test_sql",
+  "lib/DatabaseService/test_test.py::test_insert_item"
+]
