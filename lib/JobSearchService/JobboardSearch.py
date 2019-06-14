@@ -1,12 +1,14 @@
 from lib.CrawlerService.Crawler import Crawler
 from lib.DatabaseService.JobDBService import IJobDatabase
+import time
+import random
 
-class JobboardCrawler(Crawler):
+class JobboardSearch():
     """
     This crawler interacts with the db to check if any job has already existed in DB
     """
     
-    polite_policy_time_interval = randint(5, 8)
+    polite_policy_time_interval = random.randint(5, 8)
     
     def __init__(self, db_service: IJobDatabase):
         self.db = db_service
@@ -24,12 +26,11 @@ class JobboardCrawler(Crawler):
         # for each page:
         #   for each job in container:
         #       save in db + created date
-        #       counter for duplicated
         #   if duplicates more than 50%, stop crawling -> break
         
         for index, page in enumerate(pages):
 
-            # polite policy -- delay
+            # polite policy -- delay -- no dont make it static
             time.sleep(self.polite_policy_time_interval)
 
             # url processing
@@ -43,6 +44,7 @@ class JobboardCrawler(Crawler):
             # find all job titles
             containers = page_soup.findAll(
                 "div", {"data-tn-component": "organicJob"})
+            
             for job in containers:
 
                 try:
@@ -56,6 +58,7 @@ class JobboardCrawler(Crawler):
                     s_eng = b_name
                     term = term
                     u_link = domain + job.h2.a['href'].strip()
+                    self.db.
                     list_jobs.add_data(date, j_title, company,
                                        loc, s_eng, term, u_link)
 

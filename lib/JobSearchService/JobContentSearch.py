@@ -1,7 +1,7 @@
 from lib.CrawlerService.Crawler import Crawler
 
 
-class JobContentCrawler(Crawler):
+class JobContentSearch():
 
     def analyse(self):
         pass

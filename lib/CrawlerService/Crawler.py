@@ -1,4 +1,3 @@
-from urllib.request import urlopen
 import requests
 from bs4 import BeautifulSoup
 import time
@@ -31,7 +30,8 @@ class Crawler():
         Parsing url html to a bs4 soup object.
         """
         try:
-            page_html = requests.get(self._current_url, headers=self._browser_header)
+            page_html = requests.get(
+                self._current_url, headers=self._browser_header)
             page_soup = BeautifulSoup(page_html.content, 'html.parser')
 
             self._register_as_used()
@@ -50,7 +50,7 @@ class Crawler():
             return True
         else:
             return False
-        
+
     def cooldown_time(self):
         unlockable_time = self._start_time + \
             (self._crawler_freeze_seconds * 1000)
