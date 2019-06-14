@@ -55,8 +55,6 @@ class Crawler():
         unlockable_time = self._start_time + \
             (self._crawler_freeze_seconds * 1000)
         now = int(round(time.time() * 1000))
-        print(unlockable_time)
-        print(now)
         return unlockable_time - now
 
     def _register_as_used(self):
