@@ -3,31 +3,23 @@ from lib.DatabaseService.JobDBService import IJobDatabase
 import time
 import random
 
-class JobboardSearch():
-    """
-    This crawler interacts with the db to check if any job has already existed in DB
-    """
-    
-    polite_policy_time_interval = random.randint(5, 8)
-    
-    def __init__(self, db_service: IJobDatabase):
-        self.db = db_service
-    
-    def crawl_indeed(self, term, location):
+
+class IndeedSerach(UniversalSearch):
+
+    def search_board(self, term, location):
         #  Job: indeed
         # TODO: not finished
         domain = 'https://au.indeed.com/'
         b_name = 'Indeed'
         pages = ['', '&start=10', '&start=20', '&start=30', '&start=40',
-                '&start=50', '&start=60']  # say, 30 results for indeed
+                 '&start=50', '&start=60']  # say, 30 results for indeed
         print('Now searching {} from {} ...'.format(term, b_name))
-        
-        
+
         # for each page:
         #   for each job in container:
         #       save in db + created date
         #   if duplicates more than 50%, stop crawling -> break
-        
+
         for index, page in enumerate(pages):
 
             # polite policy -- delay -- no dont make it static
@@ -44,7 +36,7 @@ class JobboardSearch():
             # find all job titles
             containers = page_soup.findAll(
                 "div", {"data-tn-component": "organicJob"})
-            
+
             for job in containers:
 
                 try:
@@ -66,7 +58,7 @@ class JobboardSearch():
                     list_jobs.add_data(99, 'error', 'error',
                                        'error', s_eng, term, 'error')
 
-        # Break if no result is returned from the first page
+            # Break if no result is returned from the first page
             if len(containers) == 0:
                 if page == 0:
                     print("No result returned from {}, with term {}".format(
@@ -74,12 +66,9 @@ class JobboardSearch():
                 break
 
         return list_jobs.return_list()
-    
-    def crawl_SEEK(self, term, location):
-        pass
-    
-    def crawl_neuvoo(self, term, location):
-        pass
-    
-    def crawl_gumtree(self, term, location):
+
+    def search_job_description(self):
+        """
+        Indeed specific
+        """
         pass
