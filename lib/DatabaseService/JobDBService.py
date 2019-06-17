@@ -141,6 +141,10 @@ class JobDatabase(IJobDatabase):
 
         except Exception as e:
             raise e
+        
+    #TODO: not implm
+    def update_date(self, data_id: str):
+        pass
 
     def delete_data(self):
         # TODO: Further development

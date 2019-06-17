@@ -1,31 +1,19 @@
 from lib.CrawlerService.Crawler import Crawler
-from lib.DatabaseService.JobDBService import IJobDatabase
+from lib.DataModels.JobModel import JobBuilder
+from lib.JobboardPackages.Universal import UniversalSearch
 import time
 import random
-from lib.CrawlerService.Crawler import ICrawler
-from lib.DataModels.JobModel import JobBuilder
 
 
 class IndeedSerach(UniversalSearch):
 
-    crawler: ICrawler = None
-    database: IJobDatabase = None
-
-    def __init__(self, crawler: ICrawler):
-        self.crawler = crawler
-
     def search_board(self, term, location):
-        # TODO: not finished
+        # TODO: not tested
         domain = 'https://au.indeed.com/'
         b_name = 'Indeed'
         pages = ['', '&start=10', '&start=20', '&start=30', '&start=40',
                  '&start=50', '&start=60']  # say, 30 results for indeed
         print('Now searching {} from {} ...'.format(term, b_name))
-
-        # for each page:
-        #   for each job in container:
-        #       save in db + created date
-        #   if duplicates more than 50%, stop crawling -> break
 
         for page in pages:
 
@@ -55,10 +43,6 @@ class IndeedSerach(UniversalSearch):
 
                 try:
                     job_builder = JobBuilder()
-
-                    # TODO: not impl
-                    date = page
-
                     job_builder.set_jobtitle(job.h2.text.strip())
                     job_builder.set_company(job.findAll("span", {'class': 'company'})[
                         0].text)
@@ -73,13 +57,19 @@ class IndeedSerach(UniversalSearch):
                         job_model = job_builder.build_empty()
                         self.database.create_data(job_model)
 
+                    else:
+                        data_id = job_model.get_id()
+                        self.database.update_date(data_id)
+
                 except:
                     job_model = job_builder.build_empty()
                     self.database.create_data(job_model)
 
             # Break if no result is returned from the first page
             if len(containers) == 0:
-                if page == 0: print("No result returned from {}, with term {}".format(b_name, term))
+                if page == 0:
+                    print("No result returned from {}, with term {}".format(
+                        b_name, term))
                 break
 
         return True
