@@ -2,6 +2,27 @@ import requests
 from bs4 import BeautifulSoup
 import time
 
+from abc import ABC, abstractmethod
+
+
+class ICrawler(ABC):
+
+    @abstractmethod
+    def configure_crawler(self, url: str, crawler_freeze_seconds: int):
+        pass
+
+    @abstractmethod
+    def execute(self) -> "page_soup":
+        pass
+
+    @abstractmethod
+    def is_locked(self) -> bool:
+        pass
+
+    @abstractmethod
+    def cooldown_time(self) -> bool:
+        pass
+
 
 class Crawler():
     """
