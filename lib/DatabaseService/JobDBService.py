@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
 import sqlite3
+from lib.DataModels.JobModel import JobModel
+import time
+
 
 """
 If we want to expand this service, we might need to consider using command design pattern. Dont really know how i can impl yet.
@@ -37,12 +40,14 @@ class IJobDatabase(ABC):
 
 class JobDatabase(IJobDatabase):
 
+    # Singleton DB
     __instance = None
     conn = None
     cursor = None
     db_name = "Database/Job.db"
     table_name = "job_table"
     passcode = "4321"
+    created_time = time.time()
 
     @staticmethod
     def instantiate_Database() -> IJobDatabase:
@@ -78,26 +83,29 @@ class JobDatabase(IJobDatabase):
             raise Exception('Wrong password, db reset request declined')
         cmd = []
         cmd.append("DROP TABLE IF EXISTS {};".format(self.table_name))
-        cmd.append("CREATE TABLE {} (Page text, Job_title text, Company text, Location text, Search_eng text,\
-            Term text, URL text, Words_of_concern text)".format(self.table_name))
-        
+        cmd.append("CREATE TABLE {} (PKey text, Page text, Job_title text, Company text, Location text, Search_eng text,\
+            Term text, URL text, Words_of_concern text, created_time Integer)".format(self.table_name))
+
         [self.cursor.execute(c) for c in cmd]
         return True
 
     def _sql(self, sql):
         return self.cursor.execute(sql)
 
-    def create_data(self, key_pair: dict):
+    def create_data(self, job_model: JobModel):
         try:
-            cmd = "INSERT INTO {} VALUES ('{}','{}','{}','{}','{}','{}','{}','{}')".format(self.table_name,
-                                                                                           key_pair['Page'],
-                                                                                           key_pair['Job_title'],
-                                                                                           key_pair['Company'],
-                                                                                           key_pair['Location'],
-                                                                                           key_pair['Search_eng'],
-                                                                                           key_pair['Term'],
-                                                                                           key_pair['URL'],
-                                                                                           key_pair['Words_of_concern'])
+            cmd = "INSERT INTO {} VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".format(self.table_name,
+                                                                                                     job_model.pkey,
+                                                                                                     job_model.page,
+                                                                                                     job_model.jobtitle,
+                                                                                                     job_model.company,
+                                                                                                     job_model.location,
+                                                                                                     job_model.search_engine,
+                                                                                                     job_model.term,
+                                                                                                     job_model.url,
+                                                                                                     job_model.word_of_concerns,
+                                                                                                     self.created_time
+                                                                                                     )
             self.cursor.execute(cmd)
             return True
 
@@ -110,10 +118,9 @@ class JobDatabase(IJobDatabase):
             for counter, word in enumerate(columns):
                 if counter >= 1:
                     columns_str = columns_str + ", " + word
-                
+
                 else:
                     columns_str = word
-                    
 
             cmd = "SELECT {} FROM {}".format(columns_str, self.table_name)
             print(cmd)
@@ -138,3 +145,11 @@ class JobDatabase(IJobDatabase):
     def delete_data(self):
         # TODO: Further development
         raise Exception('Not implemented error')
+
+    #TODO: not implm
+    def contains(self, id: str):
+        try:
+            return True
+
+        except:
+            return False
