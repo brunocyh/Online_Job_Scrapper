@@ -146,8 +146,8 @@ class JobDatabase(IJobDatabase):
     def update_date(self, data_id: str):
         pass
 
+    # TODO: Further development
     def delete_data(self):
-        # TODO: Further development
         raise Exception('Not implemented error')
 
     #TODO: not implm

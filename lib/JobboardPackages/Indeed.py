@@ -13,24 +13,20 @@ class IndeedSerach(UniversalSearch):
         b_name = 'Indeed'
         pages = ['', '&start=10', '&start=20', '&start=30', '&start=40',
                  '&start=50', '&start=60']  # say, 30 results for indeed
+        k_words = term.replace(" ", "-")
         print('Now searching {} from {} ...'.format(term, b_name))
 
         for page in pages:
 
-            # Configure crawler
-            while not self.crawler.is_locked():
-                try:
-                    # url processing
-                    k_words = term.replace(" ", "-")
-                    url = 'jobs?q={}&l={}&sort=date' + page
-                    url = domain + url.format(k_words, location)
-
-                    # Polite Policy applies here
-                    cooldown_seconds = random.randint(5, 8)
-
-                    self.crawler.configure_crawler(url, cooldown_seconds)
-                except:
-                    time.sleep(1)
+            # wait until the crawler is unlocked
+            while self.crawler.is_locked():
+                time.sleep(1)
+                    
+            # Configure crawler only when cooled down
+            url = 'jobs?q={}&l={}&sort=date' + page
+            url = domain + url.format(k_words, location)
+            cooldown_seconds = random.randint(5, 8)
+            self.crawler.configure_crawler(url, cooldown_seconds)
 
             # Retrieve web page
             page_soup = self.crawler.execute()
@@ -71,6 +67,8 @@ class IndeedSerach(UniversalSearch):
                     print("No result returned from {}, with term {}".format(
                         b_name, term))
                 break
+            
+            
 
         return True
 
