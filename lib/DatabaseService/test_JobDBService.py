@@ -23,7 +23,6 @@ def test_sql():
     db = get_connected_db()
     iterator = db._sql("SELECT * FROM job_table")
     for item in iterator:
-        print(item)
         return True
 
     assert False
