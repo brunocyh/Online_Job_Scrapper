@@ -123,7 +123,6 @@ class JobDatabase(IJobDatabase):
                     columns_str = word
 
             cmd = "SELECT {} FROM {}".format(columns_str, self.table_name)
-            print(cmd)
             return self._sql(cmd)
 
         except Exception as e:
@@ -159,8 +158,6 @@ class JobDatabase(IJobDatabase):
             cmd = "Select 1 FROM {} WHERE EXISTS (SELECT 1 FROM {} WHERE pkey = '{}');".format(
                 self.table_name, self.table_name, job_id)
             cursor = self._sql(cmd)
-
-            print(cursor.rowcount)
 
             if cursor.rowcount <= 0:
                 return False
