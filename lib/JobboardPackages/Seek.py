@@ -38,14 +38,19 @@ class SeekSerach(UniversalSearch):
             for p, job in enumerate(containers):
 
                 try:
-                    #TODO: to be confimred
+                    #TODO: to be tested
+                    company = jobp.find('a', {'data-automation': 'jobTitle'}).text
+                    title = job.find('a', {'data-automation': 'jobCompany'}).text
+                    location = job.find('a', {'data-automation': 'jobArea'}).text
+                    add_url = job.find('a', {'data-automation': 'jobArea'})['href']
+                    
                     job_builder = JobBuilder()
-                    job_builder.set_jobtitle(job.find('div', {'class': 'title'}).a['title'])
-                    job_builder.set_company(job.find('div', {'class': 'sjcl'}).div.span.text.strip())
-                    job_builder.set_location(job.find('div', {'class': 'sjcl'}).findAll('span')[1].text)
+                    job_builder.set_jobtitle(title)
+                    job_builder.set_company(company)
+                    job_builder.set_location(location)
                     job_builder.set_search_engine(self.b_name)
                     job_builder.set_term(term)
-                    job_builder.set_url(self.domain + job.find('div', {'class': 'title'}).a['href'].strip('/'))
+                    job_builder.set_url(self.domain + add_url.strip('/'))
 
                     # Stores data only if it didnt exist
                     if not self.database.contains(job_builder.get_id()):
