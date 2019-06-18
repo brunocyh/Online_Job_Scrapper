@@ -1,5 +1,6 @@
 from lib.DatabaseService.JobDBService import JobDatabase
 import random
+from lib.DataModels.JobModel import JobBuilder, JobModel
 
 
 def get_connected_db():
@@ -15,7 +16,7 @@ def test_instantiate():
 
 def test_reset_table():
     db = get_connected_db()
-    assert db.reset_table()
+    assert db.reset_table(passcode='4321')
 
 
 def test_sql():
@@ -30,16 +31,16 @@ def test_sql():
 
 def test_insert_item():
     db = get_connected_db()
-    msg = db.create_data({
-        "Page": "test",
-        "Job_title": str(random.random()),
-        "Company": str(random.random()),
-        "Location": "test",
-        "Search_eng": "test",
-        "Term": "test",
-        "URL": str(random.random()),
-        "Words_of_concern": "test",
-    })
+    builder = JobBuilder()
+    builder.set_company(str(random.random()))
+    builder.set_jobtitle(str(random.random()))
+    builder.set_location(str(random.random()))
+    builder.set_page(str(random.random()))
+    builder.set_search_engine('test engine')
+    builder.set_term(str(random.random()))
+    builder.set_url(str(random.random()))
+    builder.set_word_of_concerns(str(random.random()))
+    msg = db.create_data(builder.build())
     db.commit()
     assert msg
 
