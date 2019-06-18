@@ -39,7 +39,7 @@ class SeekSerach(UniversalSearch):
 
                 try:
                     #TODO: to be tested
-                    company = jobp.find('a', {'data-automation': 'jobTitle'}).text
+                    company = job.find('a', {'data-automation': 'jobTitle'}).text
                     title = job.find('a', {'data-automation': 'jobCompany'}).text
                     location = job.find('a', {'data-automation': 'jobArea'}).text
                     add_url = job.find('a', {'data-automation': 'jobArea'})['href']
