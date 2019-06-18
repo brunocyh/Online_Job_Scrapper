@@ -6,25 +6,26 @@ import random
 
 
 class IndeedSerach(UniversalSearch):
+    
+    domain = 'https://au.indeed.com/'
+    b_name = 'Indeed'
 
     def search_board(self, term, location):
-        # TODO: not tested
-        domain = 'https://au.indeed.com/'
-        b_name = 'Indeed'
+        print('Now searching {} from {} ...'.format(term, self.b_name))
+        
         pages = ['', '&start=10', '&start=20', '&start=30', '&start=40',
                  '&start=50', '&start=60']  # say, 30 results for indeed
         k_words = term.replace(" ", "-")
-        print('Now searching {} from {} ...'.format(term, b_name))
 
         for page in pages:
 
             # wait until the crawler is unlocked
             while self.crawler.is_locked():
                 time.sleep(1)
-                    
+
             # Configure crawler only when cooled down
             url = 'jobs?q={}&l={}&sort=date' + page
-            url = domain + url.format(k_words, location)
+            url = self.domain + url.format(k_words, location)
             cooldown_seconds = random.randint(5, 8)
             self.crawler.configure_crawler(url, cooldown_seconds)
 
@@ -65,10 +66,8 @@ class IndeedSerach(UniversalSearch):
             if len(containers) == 0:
                 if page == 0:
                     print("No result returned from {}, with term {}".format(
-                        b_name, term))
+                        self.b_name, term))
                 break
-            
-            
 
         return True
 
