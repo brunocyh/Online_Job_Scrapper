@@ -6,15 +6,15 @@ import random
 
 
 class SeekSerach(UniversalSearch):
-    
+
     domain = 'https://www.seek.com.au/'
     b_name = 'Seek'
 
     def search_board(self, term, location):
         print('Now searching {} from {} ...'.format(term, self.b_name))
-        
+
         pages = ['', '&page=2', '&page=3', '&page=4', '&page=5',
-                '&page=6', '&page=7']  # say, 30 results for indeed
+                 '&page=6', '&page=7']  # say, 30 results for indeed
         k_words = term.replace(" ", "-")
 
         for page in pages:
@@ -34,16 +34,20 @@ class SeekSerach(UniversalSearch):
 
             # find all job titles
             containers = page_soup.findAll("article")
-            
+
             for p, job in enumerate(containers):
 
                 try:
-                    #TODO: to be tested
-                    company = job.find('a', {'data-automation': 'jobTitle'}).text
-                    title = job.find('a', {'data-automation': 'jobCompany'}).text
-                    location = job.find('a', {'data-automation': 'jobArea'}).text
-                    add_url = job.find('a', {'data-automation': 'jobArea'})['href']
-                    
+                    # TODO: to be tested
+                    company = job.find(
+                        'a', {'data-automation': 'jobTitle'}).text
+                    title = job.find(
+                        'a', {'data-automation': 'jobCompany'}).text
+                    location = job.find(
+                        'a', {'data-automation': 'jobArea'}).text
+                    add_url = job.find(
+                        'a', {'data-automation': 'jobArea'})['href']
+
                     job_builder = JobBuilder()
                     job_builder.set_jobtitle(title)
                     job_builder.set_company(company)

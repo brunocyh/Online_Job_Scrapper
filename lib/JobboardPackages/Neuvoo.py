@@ -6,13 +6,13 @@ import random
 
 
 class NeuvooSerach(UniversalSearch):
-    
+
     domain = 'https://au.neuvoo.com/'
     b_name = 'Neuvoo'
 
     def search_board(self, term, location):
         print('Now searching {} from {} ...'.format(term, self.b_name))
-        
+
         pages = ['', '2', '3', '4', '5', '6']  # say, 30 results for indeed
         k_words = term.replace(" ", "+")
 
@@ -33,16 +33,18 @@ class NeuvooSerach(UniversalSearch):
 
             # find all job titles
             containers = page_soup.findAll("div", {'class': 'job-c'})
-            
+
             for p, job in enumerate(containers):
 
                 try:
                     # TODO: to be tested
                     company = job.find('a', {'class': 'gojob'}).text
                     title = job.find('span', {'class': 'j-empname-label'}).text
-                    location = job.find('div', {'class': 'j-location'}).findAll('span')[0].text
-                    add_url = job.find('a', {'class': 'gojob'})['href'].strip('/')
-                    
+                    location = job.find(
+                        'div', {'class': 'j-location'}).findAll('span')[0].text
+                    add_url = job.find('a', {'class': 'gojob'})[
+                        'href'].strip('/')
+
                     job_builder = JobBuilder()
                     job_builder.set_jobtitle(title)
                     job_builder.set_company(company)

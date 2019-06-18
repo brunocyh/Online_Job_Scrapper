@@ -6,13 +6,13 @@ import random
 
 
 class IndeedSerach(UniversalSearch):
-    
+
     domain = 'https://au.indeed.com/'
     b_name = 'Indeed'
 
     def search_board(self, term, location):
         print('Now searching {} from {} ...'.format(term, self.b_name))
-        
+
         pages = ['', '&start=10', '&start=20', '&start=30', '&start=40',
                  '&start=50', '&start=60']  # say, 30 results for indeed
         k_words = term.replace(" ", "-")
@@ -35,15 +35,18 @@ class IndeedSerach(UniversalSearch):
             # find all job titles
             containers = page_soup.findAll(
                 "div", {"data-tn-component": "organicJob"})
-            
+
             for p, job in enumerate(containers):
 
                 try:
-                    company = job.find('div', {'class': 'sjcl'}).div.span.text.strip()
+                    company = job.find(
+                        'div', {'class': 'sjcl'}).div.span.text.strip()
                     title = job.find('div', {'class': 'title'}).a['title']
-                    location = job.find('div', {'class': 'sjcl'}).findAll('span')[1].text
-                    add_url = job.find('div', {'class': 'title'}).a['href'].strip('/')
-                    
+                    location = job.find(
+                        'div', {'class': 'sjcl'}).findAll('span')[1].text
+                    add_url = job.find(
+                        'div', {'class': 'title'}).a['href'].strip('/')
+
                     job_builder = JobBuilder()
                     job_builder.set_jobtitle(title)
                     job_builder.set_company(company)
