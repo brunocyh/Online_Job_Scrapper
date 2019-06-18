@@ -35,28 +35,27 @@ class IndeedSerach(UniversalSearch):
             # find all job titles
             containers = page_soup.findAll(
                 "div", {"data-tn-component": "organicJob"})
-
-            for job in containers:
+            
+            for p, job in enumerate(containers):
 
                 try:
                     job_builder = JobBuilder()
-                    job_builder.set_jobtitle(job.h2.text.strip())
-                    job_builder.set_company(job.findAll("span", {'class': 'company'})[
-                        0].text)
-                    job_builder.set_location(job.findAll("span", {'class': 'location'})[
-                        0].text)
-                    job_builder.set_search_engine(b_name)
+                    job_builder.set_jobtitle(job.find('div', {'class': 'title'}).a['title'])
+                    job_builder.set_company(job.find('div', {'class': 'sjcl'}).div.span.text.strip())
+                    job_builder.set_location(job.find('div', {'class': 'sjcl'}).findAll('span')[1].text)
+                    job_builder.set_search_engine(self.b_name)
                     job_builder.set_term(term)
-                    job_builder.set_url(domain + job.h2.a['href'])
+                    job_builder.set_url(self.domain + job.find('div', {'class': 'title'}).a['href'].strip('/'))
 
                     # Stores data only if it didnt exist
                     if not self.database.contains(job_builder.get_id()):
-                        job_model = job_builder.build_empty()
+                        job_model = job_builder.build()
                         self.database.create_data(job_model)
 
                     else:
-                        data_id = job_model.get_id()
-                        self.database.update_date(data_id)
+                        # data_id = job_builder.get_id()
+                        # self.database.update_date(data_id)
+                        pass
 
                 except:
                     job_model = job_builder.build_empty()

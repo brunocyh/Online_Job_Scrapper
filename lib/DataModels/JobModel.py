@@ -26,15 +26,15 @@ class JobModel():
 
 class JobBuilder():
 
-    pkey = None
-    page = None
-    jobtitle = None
-    company = None
-    location = None
-    search_engine = None
-    term = None
-    url = None
-    word_of_concerns = None
+    pkey = ''
+    page = ''
+    jobtitle = ''
+    company = ''
+    location = ''
+    search_engine = ''
+    term = ''
+    url = ''
+    word_of_concerns = ''
 
     def set_page(self, content: str):
         self.page = content

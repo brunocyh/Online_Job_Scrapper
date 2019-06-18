@@ -1,10 +1,16 @@
 from lib.JobboardPackages.Indeed import IndeedSerach
 from lib.CrawlerService.Crawler import Crawler
+from lib.DatabaseService.JobDBService import JobDatabase
 
 
-# TODO: test failed still
 def test_integration_indeed():
     crawler = Crawler()
-    searcher = IndeedSerach(crawler)
 
-    assert searcher.search_board(term='software engineer', location='brisbane')
+    database = JobDatabase.instantiate_Database()
+    database.connect()
+    searcher = IndeedSerach(crawler, database)
+    response = searcher.search_board(term='barista', location='brisbane')
+
+    database.commit()
+    database.disconnect()
+    assert response == True

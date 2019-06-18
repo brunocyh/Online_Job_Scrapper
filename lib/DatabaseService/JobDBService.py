@@ -142,7 +142,6 @@ class JobDatabase(IJobDatabase):
         except Exception as e:
             raise e
 
-    # TODO: to be tested
     def update_date(self, data_id: str):
         try:
             cmd = "UPDATE {} SET created_time = '{}' WHERE pkey = '{}';".format(self.table_name,
@@ -154,15 +153,16 @@ class JobDatabase(IJobDatabase):
         except Exception as e:
             raise e
 
-    # TODO: to be tested
     def contains(self, job_id: str):
 
         try:
-            cmd = "Select 1 FROM {} WHERE EXISTS (SELECT 1 FROM {} WHERE pkey = '{}';)".format(
+            cmd = "Select 1 FROM {} WHERE EXISTS (SELECT 1 FROM {} WHERE pkey = '{}');".format(
                 self.table_name, self.table_name, job_id)
             cursor = self._sql(cmd)
 
-            if cursor.getCount() == 0:
+            print(cursor.rowcount)
+
+            if cursor.rowcount <= 0:
                 return False
             else:
                 return True

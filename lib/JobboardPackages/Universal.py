@@ -16,8 +16,9 @@ class UniversalSearch():
     crawler: ICrawler = None
     database: IJobDatabase = None
 
-    def __init__(self, crawler: ICrawler):
+    def __init__(self, crawler, database):
         self.crawler = crawler
+        self.database = database
 
     def search_board(self):
         """
