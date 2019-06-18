@@ -88,10 +88,6 @@ class JobBuilder():
             word_of_concerns='404'
         )
 
-    def get_job(self):
-        # TODO: to be implm, do i need to check whether all attr arte filled?
-        raise Exception('Not implm error')
-
     def get_id(self):
         h = hashlib.md5()
         txt = self.company+self.url

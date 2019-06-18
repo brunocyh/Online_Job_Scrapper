@@ -79,14 +79,14 @@ class JobDatabase(IJobDatabase):
 
     def reset_table(self, passcode):
         print('I hope you know what you are doing...')
-        if passcode == self.passcode:
+        if passcode != self.passcode:
             raise Exception('Wrong password, db reset request declined')
         cmd = []
         cmd.append("DROP TABLE IF EXISTS {};".format(self.table_name))
         cmd.append("CREATE TABLE {} (PKey text, Page text, Job_title text, Company text, Location text, Search_eng text,\
             Term text, URL text, Words_of_concern text, created_time Integer)".format(self.table_name))
 
-        [self.cursor.execute(c) for c in cmd]
+        [self._sql(c) for c in cmd]
         return True
 
     def _sql(self, sql):
@@ -106,7 +106,7 @@ class JobDatabase(IJobDatabase):
                                                                                                      job_model.word_of_concerns,
                                                                                                      self.created_time
                                                                                                      )
-            self.cursor.execute(cmd)
+            self._sql(cmd)
             return True
 
         except Exception as e:
@@ -124,7 +124,7 @@ class JobDatabase(IJobDatabase):
 
             cmd = "SELECT {} FROM {}".format(columns_str, self.table_name)
             print(cmd)
-            return self.cursor.execute(cmd)
+            return self._sql(cmd)
 
         except Exception as e:
             raise e
@@ -136,24 +136,40 @@ class JobDatabase(IJobDatabase):
                                                                     conditions[1],
                                                                     key_pair[0],
                                                                     key_pair[1])
-            self.cursor.execute(cmd)
+            self._sql(cmd)
             return True
 
         except Exception as e:
             raise e
-        
-    #TODO: not implm
+
+    # TODO: to be tested
     def update_date(self, data_id: str):
-        pass
+        try:
+            cmd = "UPDATE {} SET created_time = '{}' WHERE pkey = '{}';".format(self.table_name,
+                                                                                self.created_time,
+                                                                                data_id)
+            self._sql(cmd)
+            return True
+
+        except Exception as e:
+            raise e
+
+    # TODO: to be tested
+    def contains(self, job_id: str):
+
+        try:
+            cmd = "Select 1 FROM {} WHERE EXISTS (SELECT 1 FROM {} WHERE pkey = '{}';)".format(
+                self.table_name, self.table_name, job_id)
+            cursor = self._sql(cmd)
+
+            if cursor.getCount() == 0:
+                return False
+            else:
+                return True
+
+        except Exception as e:
+            raise e
 
     # TODO: Further development
     def delete_data(self):
         raise Exception('Not implemented error')
-
-    #TODO: not implm
-    def contains(self, id: str):
-        try:
-            return True
-
-        except:
-            return False
