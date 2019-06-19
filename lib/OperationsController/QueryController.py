@@ -11,11 +11,14 @@ class Query():
         pass
 
     def get_jobs_all(self):
-        #TODO: tb tested
+        """
+        For now we will just retrieve all the data.
+        """
         data = []
         db = JobDatabase.instantiate_Database()
         db.connect()
-        for result in db.read_all_data():
+        columns = ["Key", "Job_title", "Company", "Location", "Search_eng", "Term", "URL", "Words_of_concern", "created_time"]
+        for result in db.read_all_data(columns):
             data.append(result)
         db.disconnect()
         return DataFrame(data)
