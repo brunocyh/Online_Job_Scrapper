@@ -24,7 +24,7 @@ class SearchEngine():
     location = None
 
     def __init__(self, term, location):
-        self.db_instance = JobDatabase()
+        self.db_instance = JobDatabase.instantiate_Database()
         self.term = term
         self.location = location
 
