@@ -4,6 +4,9 @@ from abc import ABC, abstractmethod
 
 
 class IJobboardSearch(ABC):
+    b_name = None
+    domain = None
+
     @abstractmethod
     def search_board(self, term, location): pass
 
@@ -11,10 +14,12 @@ class IJobboardSearch(ABC):
     def search_job_description(self): pass
 
 
-class UniversalSearch():
+class UniversalSearch(IJobboardSearch):
 
     crawler: ICrawler = None
     database: IJobDatabase = None
+    b_name = None
+    domain = None
 
     def __init__(self, crawler, database):
         self.crawler = crawler
@@ -31,10 +36,10 @@ class UniversalSearch():
         Just parse the entire website
         """
         pass
-    
+
     def searching_algorithm_jobs(self):
         """
         Only be used for child
         """
-        #TODO: refactor different crawlers: they should inherit this method
+        # TODO: refactor different crawlers: they should inherit this method
         pass
