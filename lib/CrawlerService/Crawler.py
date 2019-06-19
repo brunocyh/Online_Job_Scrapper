@@ -20,6 +20,10 @@ class ICrawler(ABC):
         pass
 
     @abstractmethod
+    def unlock(self) -> bool:
+        pass
+    
+    @abstractmethod
     def cooldown_time(self) -> bool:
         pass
 
@@ -79,4 +83,7 @@ class Crawler():
         return unlockable_time - now
 
     def _register_as_used(self):
+        self._current_url = ''
+        
+    def unlock(self):
         self._current_url = None

@@ -69,6 +69,9 @@ class IndeedSerach(UniversalSearch):
                     job_model = job_builder.build_empty(term, self.b_name)
                     self.database.create_data(job_model)
 
+            # Unlock crawler
+            self.crawler.unlock()
+
             # Break if no result is returned from the first page
             if len(containers) == 0:
                 if page == 0:
