@@ -74,7 +74,7 @@ class JobBuilder():
             word_of_concerns=self.word_of_concerns
         )
 
-    def build_empty(self):
+    def build_empty(self, term='404', engine='404'):
         self._store_pkey()
         return JobModel(
             pkey=self.pkey,
@@ -82,8 +82,8 @@ class JobBuilder():
             jobtitle='404',
             company='404',
             location='404',
-            search_engine='404',
-            term='404',
+            search_engine=engine,
+            term=term,
             url='404',
             word_of_concerns='404'
         )

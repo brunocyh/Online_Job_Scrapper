@@ -94,7 +94,7 @@ class JobDatabase(IJobDatabase):
 
     def create_data(self, job_model: JobModel):
         try:
-            cmd = "INSERT INTO {} VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".format(self.table_name,
+            cmd = "INSERT INTO {} VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');".format(self.table_name,
                                                                                                      job_model.pkey,
                                                                                                      job_model.page,
                                                                                                      job_model.jobtitle,
