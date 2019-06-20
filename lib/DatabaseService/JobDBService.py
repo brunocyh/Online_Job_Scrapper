@@ -26,7 +26,7 @@ class IJobDatabase(ABC):
     def reset_table(self, passcode): pass
 
     @abstractmethod
-    def create_data(self, key_pair: dict): pass
+    def create_data(self, job_model: JobModel): pass
 
     @abstractmethod
     def read_all_data(self, columns): pass
