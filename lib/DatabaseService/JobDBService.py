@@ -64,7 +64,7 @@ class JobDatabase(IJobDatabase):
             JobDatabase.__instance = self
 
     def connect(self):
-        self.conn = sqlite3.connect(self.db_name)
+        self.conn = sqlite3.connect(self.db_name, check_same_thread=False)
         self.cursor = self.conn.cursor()
         return True
 
