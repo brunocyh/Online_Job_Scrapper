@@ -26,7 +26,7 @@ class IndeedSerach(UniversalSearch):
             # Configure crawler only when cooled down
             url = 'jobs?q={}&l={}&sort=date' + page
             url = self.domain + url.format(k_words, location)
-            cooldown_seconds = random.randint(5, 8)
+            cooldown_seconds = random.randint(10, 15)
             self.crawler.configure_crawler(url, cooldown_seconds)
 
             # Retrieve web page

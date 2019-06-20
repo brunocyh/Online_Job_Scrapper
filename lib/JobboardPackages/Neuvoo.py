@@ -25,7 +25,7 @@ class NeuvooSerach(UniversalSearch):
             # Configure crawler only when cooled down
             url = '/jobs/?k={}&l={}&f=&o=&p={}&r=15'
             url = self.domain + url.format(k_words, location, page)
-            cooldown_seconds = random.randint(5, 8)
+            cooldown_seconds = random.randint(10, 15)
             self.crawler.configure_crawler(url, cooldown_seconds)
 
             # Retrieve web page
