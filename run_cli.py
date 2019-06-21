@@ -10,10 +10,10 @@ def set_up_database(passcode):
 
 
 def run_crawl():
-    terms = ['software engineering', 'web development',
+    terms = ['software engineering', 'backend development', 'full stack developer',
              'data analyst', 'data science']
     locations = ['brisbane']
-    prefix = ['parttime ', 'junior ']
+    prefix = ['parttime', 'junior']
     stop_words = ['senior', 'manager', 'director', 'postdoctoral', 'doctoral']
     words_of_concerns = []
 

@@ -85,6 +85,9 @@ class SearchEngine():
 
     def _start_all_threads(self):
         for thread in self.threads:
+            while not thread.is_alive():
+                print('wait to start thread')
+            
             thread.start()
 
     def _await_all_threads(self):
