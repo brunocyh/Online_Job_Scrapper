@@ -10,7 +10,7 @@ Early-2018 version:
 Mid-2019 version:
 - Refactored the entire architecture, extensible for other application
 - Enhance performance
-- Critical tests included
+- Tests included
 - Purpose: Demostrate my refactoring and data structure. Also to train my software engineering skills.
 
 ** NOTE:
