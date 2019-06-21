@@ -11,7 +11,7 @@ Mid-2019 version:
 - Refactored the entire architecture, extensible for other application
 - Enhance performance
 - Critical tests included
-- Purpose: Training my refactor skills
+- Purpose: Demostrate my refactoring and data structure. Also to train my software engineering skills.
 
 ** NOTE:
 Due to privacy issue, all job data were not published. This project is built for fun and entirely for personal use only. 
