@@ -4,15 +4,14 @@ The story: I was graduated in Brisbane 2017 December, as an international studen
 Early-2018 version:
 - Does the job (polite policy applies! I hate spamming web hosts)
 - Focus on job hunts in Australia
-- Supports -- AU: Neuvoo, Seek, Gumtree, Indeed
+- Purpose: Facilitate myself to find jobs
 - Acheivement: saved me heaps of time in browsing various jobboards; also landed me internship and eventually a software engineer position
 
 Mid-2019 version:
 - Refactored the entire architecture, extensible for other application
 - Enhance performance
-- Unit tests included
-- Additional jobboard support: Stackoverflow
-- Additional countries supported: HK, SG
+- Critical tests included
+- Purpose: Training my refactor skills
 
 ** NOTE:
 Due to privacy issue, all job data were not published. This project is built for fun and entirely for personal use only. 
