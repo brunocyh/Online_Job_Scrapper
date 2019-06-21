@@ -43,7 +43,7 @@ class JobBuilder():
         self.page = content
 
     def set_jobtitle(self, content: str):
-        self.jobtitle = content
+        self.jobtitle = content.lower().strip()
 
     def set_company(self, content: str):
         self.company = content.lower().strip()
@@ -100,7 +100,7 @@ class JobBuilder():
 
     def get_id(self):
         h = hashlib.md5()
-        txt = self.company+self.url
+        txt = self.jobtitle+self.company+self.city
         h.update(txt.encode())
         return h.hexdigest()
 
