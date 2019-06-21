@@ -57,7 +57,7 @@ class Crawler():
         try:
             page_html = requests.get(
                 self._current_url, headers=self._browser_header)
-            print('internet accessing... {}'.format(self._current_url))
+            print('         Accessing... {}'.format(self._current_url))
             page_soup = BeautifulSoup(page_html.content, 'html.parser')
 
             self._register_as_used()

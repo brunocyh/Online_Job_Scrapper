@@ -9,6 +9,7 @@ class JobModel():
                  jobtitle,
                  company,
                  location,
+                 city,
                  search_engine,
                  term,
                  url,
@@ -18,6 +19,7 @@ class JobModel():
         self.jobtitle = jobtitle
         self.company = company
         self.location = location
+        self.city = city
         self.search_engine = search_engine
         self.term = term
         self.url = url
@@ -31,6 +33,7 @@ class JobBuilder():
     jobtitle = ''
     company = ''
     location = ''
+    city = ''
     search_engine = ''
     term = ''
     url = ''
@@ -47,6 +50,9 @@ class JobBuilder():
 
     def set_location(self, content: str):
         self.location = content.lower().strip()
+        
+    def set_city(self, content: str):
+        self.city = content.lower().strip()
 
     def set_search_engine(self, content: str):
         self.search_engine = content
@@ -68,23 +74,27 @@ class JobBuilder():
             jobtitle=self.jobtitle,
             company=self.company,
             location=self.location,
+            city=self.city,
             search_engine=self.search_engine,
             term=self.term,
             url=self.url,
             word_of_concerns=self.word_of_concerns
         )
 
-    def build_empty(self, term='404', engine='404'):
-        self._store_pkey()
+    def build_empty(self, term='404', engine='404', city='404', url='404'):
+        h = hashlib.md5()
+        txt = term+engine+city+url
+        h.update(txt.encode())
         return JobModel(
-            pkey=self.pkey,
+            pkey=h.hexdigest(),
             page='404',
             jobtitle='404',
             company='404',
             location='404',
+            city=city,
             search_engine=engine,
             term=term,
-            url='404',
+            url=url,
             word_of_concerns='404'
         )
 

@@ -1,8 +1,10 @@
 from lib.DatabaseService.JobDBService import JobDatabase
 from lib.OperationsController.CrawlingController import SearchEngine
+from lib.OperationsController.QueryController import Query
+import pandas as pd
 
 
-def set_up_database(passcode):
+def reset_db(passcode):
     db = JobDatabase.instantiate_Database()
     db.connect()
     db.reset_table(passcode)
@@ -10,10 +12,11 @@ def set_up_database(passcode):
 
 
 def explore_internet():
-    terms = ['software engineering', 'backend development', 'full stack developer',
-             'data analyst', 'data science']
+    # terms = ['software engineering', 'backend development', 'full stack developer',
+    #          'data analyst', 'data science']
+    terms = ['barista']
     locations = ['brisbane']
-    prefix = ['parttime', 'junior']
+    prefix = ['parttime']
     stop_words = ['senior', 'manager', 'director', 'postdoctoral', 'doctoral']
     words_of_concerns = []
 
@@ -23,8 +26,8 @@ def explore_internet():
 
 
 def download_data():
-    print('not yet')
-    pass
+    retriever = Query()
+    retriever.get_jobs_all().to_csv('job_details.csv', index=False)
 
 
 if __name__ == "__main__":

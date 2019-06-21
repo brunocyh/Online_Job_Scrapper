@@ -37,9 +37,9 @@ class SeekSerach(UniversalSearch):
 
                 try:
                     company = job.find(
-                        'a', {'data-automation': 'jobTitle'}).text
-                    title = job.find(
                         'a', {'data-automation': 'jobCompany'}).text
+                    title = job.find(
+                        'a', {'data-automation': 'jobTitle'}).text
                     location = job.find(
                         'a', {'data-automation': 'jobArea'}).text
                     add_url = job.find(
@@ -49,6 +49,7 @@ class SeekSerach(UniversalSearch):
                     job_builder.set_jobtitle(title)
                     job_builder.set_company(company)
                     job_builder.set_location(location)
+                    job_builder.set_city(place)
                     job_builder.set_search_engine(self.b_name)
                     job_builder.set_term(term)
                     job_builder.set_url(self.domain + add_url.strip('/'))
@@ -64,7 +65,7 @@ class SeekSerach(UniversalSearch):
                         pass
 
                 except:
-                    job_model = job_builder.build_empty(term, self.b_name)
+                    job_model = job_builder.build_empty(term, self.b_name, place, self.domain + add_url)
                     self.database.create_data(job_model)
 
             # Unlock crawler

@@ -47,7 +47,7 @@ class JobDatabase(IJobDatabase):
     db_name = "Database/Job.db"
     table_name = "job_table"
     passcode = "4321"
-    created_time = time.time()
+    created_time = int(time.time())
 
     @staticmethod
     def instantiate_Database() -> IJobDatabase:
@@ -83,7 +83,7 @@ class JobDatabase(IJobDatabase):
             raise Exception('Wrong password, db reset request declined')
         cmd = []
         cmd.append("DROP TABLE IF EXISTS {};".format(self.table_name))
-        cmd.append("CREATE TABLE {} (PKey text, Page text, Job_title text, Company text, Location text, Search_eng text,\
+        cmd.append("CREATE TABLE {} (PKey text, Page text, Job_title text, Company text, Location text, City text, Search_eng text,\
             Term text, URL text, Words_of_concern text, created_time Integer)".format(self.table_name))
 
         [self._sql(c) for c in cmd]
@@ -94,18 +94,19 @@ class JobDatabase(IJobDatabase):
 
     def create_data(self, job_model: JobModel):
         try:
-            cmd = "INSERT INTO {} VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');".format(self.table_name,
-                                                                                                     job_model.pkey,
-                                                                                                     job_model.page,
-                                                                                                     job_model.jobtitle,
-                                                                                                     job_model.company,
-                                                                                                     job_model.location,
-                                                                                                     job_model.search_engine,
-                                                                                                     job_model.term,
-                                                                                                     job_model.url,
-                                                                                                     job_model.word_of_concerns,
-                                                                                                     self.created_time
-                                                                                                     )
+            cmd = "INSERT INTO {} VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');".format(self.table_name,
+                                                                                                           job_model.pkey,
+                                                                                                           job_model.page,
+                                                                                                           job_model.jobtitle,
+                                                                                                           job_model.company,
+                                                                                                           job_model.location,
+                                                                                                           job_model.city,
+                                                                                                           job_model.search_engine,
+                                                                                                           job_model.term,
+                                                                                                           job_model.url,
+                                                                                                           job_model.word_of_concerns,
+                                                                                                           self.created_time
+                                                                                                           )
             self._sql(cmd)
             return True
 

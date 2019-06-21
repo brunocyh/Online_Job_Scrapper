@@ -17,8 +17,8 @@ class Query():
         data = []
         db = JobDatabase.instantiate_Database()
         db.connect()
-        columns = ["Key", "Job_title", "Company", "Location", "Search_eng", "Term", "URL", "Words_of_concern", "created_time"]
+        columns = ["PKey", "Job_title", "Company", "Location", "City", "Search_eng", "Term", "URL", "Words_of_concern", "created_time"]
         for result in db.read_all_data(columns):
             data.append(result)
         db.disconnect()
-        return DataFrame(data)
+        return DataFrame(data, columns=columns)
