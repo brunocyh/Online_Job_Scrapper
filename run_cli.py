@@ -12,11 +12,10 @@ def reset_db(passcode):
 
 
 def explore_internet():
-    # terms = ['software engineering', 'backend development', 'full stack developer',
-    #          'data analyst', 'data science']
-    terms = ['barista']
+    terms = ['software engineering', 'backend development', 'full stack developer',
+             'data analyst', 'data science']
     locations = ['brisbane']
-    prefix = ['parttime']
+    prefix = ['', 'parttime', 'junior']
     stop_words = ['senior', 'manager', 'director', 'postdoctoral', 'doctoral']
     words_of_concerns = []
 

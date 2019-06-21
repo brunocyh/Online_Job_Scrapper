@@ -22,7 +22,7 @@ class ICrawler(ABC):
     @abstractmethod
     def unlock(self) -> bool:
         pass
-    
+
     @abstractmethod
     def cooldown_time(self) -> bool:
         pass
@@ -33,8 +33,8 @@ class Crawler():
     Crawler is intended to be instantiated once per domain. It supports 
     mechanism that make sure it crawl politely.
     """
-    _browser_header = {'User-Agent': "Mozilla/5.0 (X11; Linux i686; rv:64.0) \
-                      Gecko/20100101 Firefox/64.0"}
+    _browser_header = {
+        'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"}
     _current_url = None
     _start_time = 0
     _crawler_freeze_seconds = 0
@@ -85,6 +85,6 @@ class Crawler():
 
     def _register_as_used(self):
         self._current_url = ''
-        
+
     def unlock(self):
         self._current_url = None
