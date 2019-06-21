@@ -9,7 +9,7 @@ def set_up_database(passcode):
     return True
 
 
-def run_crawl():
+def explore_internet():
     terms = ['software engineering', 'backend development', 'full stack developer',
              'data analyst', 'data science']
     locations = ['brisbane']
@@ -22,5 +22,10 @@ def run_crawl():
     engine.execute()
 
 
+def download_data():
+    print('not yet')
+    pass
+
+
 if __name__ == "__main__":
-    print('availble methods: set_up_database, run_crawl')
+    print('availble methods: set_up_database, explore_internet, download_data')
