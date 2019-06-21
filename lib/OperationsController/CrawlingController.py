@@ -20,13 +20,21 @@ class SearchEngine():
     errors = []
 
     # Parameters
-    term = None
-    location = None
+    terms = []
+    locations = []
+    prefix = []
+    stop_words = []
+    # words_of_concerns = []
 
-    def __init__(self, term, location):
+    def __init__(self, terms: list, locations: list,
+                 prefix: list = [], stop_words: list = [],
+                 words_of_concerns: list = []):
         self.db_instance = JobDatabase.instantiate_Database()
-        self.term = term
-        self.location = location
+        self.terms = terms
+        self.locations = locations
+        self.prefix = prefix
+        self.stop_words = stop_words
+        # self.words_of_concerns=words_of_concerns
 
     def execute(self) -> list:
         """
@@ -37,13 +45,25 @@ class SearchEngine():
         # Switch on DB
         self.db_instance.connect()
 
-        # Config each crawler, attach engines to each thread
-        for instance in self.engines:
-            self._configure_thread(instance)
+        # Construct differnt combination of words
+        search_terms = []
+        for place in self.locations:
+            for pfx in self.prefix:
+                for trm in self.terms:
+                    searach_object = (place, pfx + " " + trm)
+                    search_terms.append(searach_object)
 
-        # Run threads (Start engine and wait till they re done)
-        self._start_all_threads()
-        self._await_all_threads()
+        # Config each crawler, attach engines to each thread (for each search term)
+        for indx, pair in enumerate(search_terms):
+            location, search_term = pair
+            for instance in self.engines:
+                self._configure_thread(instance, search_term, location)
+
+            # Run threads (Start engine and wait till they re done)
+            self._start_all_threads()
+            progress = (indx+1) * 100 / len(search_terms)
+            print('[{}%] Now searching {} in {}'.format(progress, search_term, location))
+            self._await_all_threads()
 
         # Switch off DB
         self.db_instance.disconnect()
@@ -51,14 +71,14 @@ class SearchEngine():
         # Report Generation:
         return self.errors
 
-    def _configure_thread(self, instance):
+    def _configure_thread(self, instance, term, location):
         crawler_instance = Crawler()
         engine: IJobboardSearch = instance(crawler=crawler_instance,
                                            database=self.db_instance)
 
         # Create thread
         crawler_thread = threading.Thread(
-            target=SearchEngine._thread_crawler, args=(engine, engine.b_name, self.term, self.location,), daemon=True)
+            target=SearchEngine._thread_crawler, args=(engine, engine.b_name, term, location,), daemon=True)
 
         # Attach to thread list
         self.threads.append(crawler_thread)
