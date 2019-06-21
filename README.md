@@ -13,3 +13,6 @@ Mid-2019 version:
 - Unit tests included
 - Additional jobboard support: Stackoverflow
 - Additional countries supported: HK, SG
+
+** NOTE:
+Due to privacy issue, all job data were not published. This project is built for fun and entirely for personal use only. 
