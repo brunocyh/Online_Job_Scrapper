@@ -55,15 +55,17 @@ class SearchEngine():
 
         # Config each crawler, attach engines to each thread (for each search term)
         for indx, pair in enumerate(search_terms):
+            threads = []
             location, search_term = pair
             for instance in self.engines:
-                self._configure_thread(instance, search_term, location)
+                new_thread = self._configure_thread(instance, search_term, location)
+                threads.append(new_thread)
 
             # Run threads (Start engine and wait till they re done)
-            self._start_all_threads()
+            self._start_all_threads(threads)
             progress = (indx+1) * 100 / len(search_terms)
             print('[{}%] Now searching {} in {}'.format(progress, search_term, location))
-            self._await_all_threads()
+            self._await_all_threads(threads)
 
         # Switch off DB
         self.db_instance.disconnect()
@@ -81,17 +83,14 @@ class SearchEngine():
             target=SearchEngine._thread_crawler, args=(engine, engine.b_name, term, location,), daemon=True)
 
         # Attach to thread list
-        self.threads.append(crawler_thread)
+        return crawler_thread
 
-    def _start_all_threads(self):
-        for thread in self.threads:
-            while not thread.is_alive():
-                print('wait to start thread')
-            
+    def _start_all_threads(self, threads):
+        for thread in threads:
             thread.start()
 
-    def _await_all_threads(self):
-        for thread in self.threads:
+    def _await_all_threads(self, threads):
+        for thread in threads:
             try:
                 thread.join()
 
