@@ -11,8 +11,6 @@ class IndeedSerach(UniversalSearch):
     b_name = 'Indeed'
 
     def search_board(self, term, location):
-        print('Now searching {} from {} ...'.format(term, self.b_name))
-
         pages = ['', '&start=10', '&start=20', '&start=30', '&start=40',
                  '&start=50', '&start=60']  # say, 30 results for indeed
         k_words = term.replace(" ", "-")

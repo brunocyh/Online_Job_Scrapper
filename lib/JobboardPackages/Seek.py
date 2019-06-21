@@ -11,8 +11,6 @@ class SeekSerach(UniversalSearch):
     b_name = 'Seek'
 
     def search_board(self, term, location):
-        print('Now searching {} from {} ...'.format(term, self.b_name))
-
         pages = ['', '&page=2', '&page=3', '&page=4', '&page=5',
                  '&page=6', '&page=7']  # say, 30 results for indeed
         k_words = term.replace(" ", "-")

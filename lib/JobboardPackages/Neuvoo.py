@@ -11,8 +11,6 @@ class NeuvooSerach(UniversalSearch):
     b_name = 'Neuvoo'
 
     def search_board(self, term, location):
-        print('Now searching {} from {} ...'.format(term, self.b_name))
-
         pages = ['', '2', '3', '4', '5', '6']  # say, 30 results for indeed
         k_words = term.replace(" ", "+")
 
