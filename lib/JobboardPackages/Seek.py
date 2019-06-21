@@ -10,7 +10,7 @@ class SeekSerach(UniversalSearch):
     domain = 'https://www.seek.com.au/'
     b_name = 'Seek'
 
-    def search_board(self, term, location):
+    def search_board(self, term, place):
         pages = ['', '&page=2', '&page=3', '&page=4', '&page=5',
                  '&page=6', '&page=7']  # say, 30 results for indeed
         k_words = term.replace(" ", "-")
@@ -23,7 +23,7 @@ class SeekSerach(UniversalSearch):
 
             # Configure crawler only when cooled down
             url = '{}-jobs/in-{}?sortmode=ListedDate' + page
-            url = self.domain + url.format(k_words, location)
+            url = self.domain + url.format(k_words, place)
             cooldown_seconds = random.randint(10, 15)
             self.crawler.configure_crawler(url, cooldown_seconds)
 
@@ -36,7 +36,6 @@ class SeekSerach(UniversalSearch):
             for p, job in enumerate(containers):
 
                 try:
-                    # TODO: to be tested
                     company = job.find(
                         'a', {'data-automation': 'jobTitle'}).text
                     title = job.find(
@@ -65,7 +64,7 @@ class SeekSerach(UniversalSearch):
                         pass
 
                 except:
-                    job_model = job_builder.build_empty()
+                    job_model = job_builder.build_empty(term, self.b_name)
                     self.database.create_data(job_model)
 
             # Unlock crawler

@@ -10,7 +10,7 @@ class NeuvooSerach(UniversalSearch):
     domain = 'https://au.neuvoo.com/'
     b_name = 'Neuvoo'
 
-    def search_board(self, term, location):
+    def search_board(self, term, place):
         pages = ['', '2', '3', '4', '5', '6']  # say, 30 results for indeed
         k_words = term.replace(" ", "+")
 
@@ -22,7 +22,7 @@ class NeuvooSerach(UniversalSearch):
 
             # Configure crawler only when cooled down
             url = 'jobs/?k={}&l={}&f=&o=&p={}&r=15'
-            url = self.domain + url.format(k_words, location, page)
+            url = self.domain + url.format(k_words, place, page)
             cooldown_seconds = random.randint(10, 15)
             self.crawler.configure_crawler(url, cooldown_seconds)
 
@@ -62,7 +62,7 @@ class NeuvooSerach(UniversalSearch):
                         pass
 
                 except:
-                    job_model = job_builder.build_empty()
+                    job_model = job_builder.build_empty(term, self.b_name)
                     self.database.create_data(job_model)
 
             # Unlock crawler

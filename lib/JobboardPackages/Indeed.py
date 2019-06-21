@@ -10,7 +10,7 @@ class IndeedSerach(UniversalSearch):
     domain = 'https://au.indeed.com/'
     b_name = 'Indeed'
 
-    def search_board(self, term, location):
+    def search_board(self, term, place):
         pages = ['', '&start=10', '&start=20', '&start=30', '&start=40',
                  '&start=50', '&start=60']  # say, 30 results for indeed
         k_words = term.replace(" ", "-")
@@ -23,7 +23,7 @@ class IndeedSerach(UniversalSearch):
 
             # Configure crawler only when cooled down
             url = 'jobs?q={}&l={}&sort=date' + page
-            url = self.domain + url.format(k_words, location)
+            url = self.domain + url.format(k_words, place)
             cooldown_seconds = random.randint(10, 15)
             self.crawler.configure_crawler(url, cooldown_seconds)
 
