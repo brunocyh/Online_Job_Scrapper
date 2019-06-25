@@ -83,7 +83,7 @@ class JobDatabase(IJobDatabase):
             raise Exception('Wrong password, db reset request declined')
         cmd = []
         cmd.append("DROP TABLE IF EXISTS {};".format(self.table_name))
-        cmd.append("CREATE TABLE {} (PKey text, Page text, Job_title text, Company text, Location text, City text, Search_eng text,\
+        cmd.append("CREATE TABLE {} (PKey text PRIMARY KEY, Page text, Job_title text, Company text, Location text, City text, Search_eng text,\
             Term text, URL text, Words_of_concern text, created_time Integer)".format(self.table_name))
 
         [self._sql(c) for c in cmd]
@@ -156,11 +156,11 @@ class JobDatabase(IJobDatabase):
     def contains(self, job_id: str):
 
         try:
-            cmd = "Select 1 FROM {} WHERE EXISTS (SELECT 1 FROM {} WHERE pkey = '{}');".format(
-                self.table_name, self.table_name, job_id)
-            cursor = self._sql(cmd)
+            cmd = "SELECT 1 FROM {} WHERE pkey = '{}';".format(
+                self.table_name, job_id)
+            results = self._sql(cmd).fetchall()
 
-            if cursor.rowcount <= 0:
+            if len(results) <= 0:
                 return False
             else:
                 return True

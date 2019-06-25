@@ -57,3 +57,8 @@ def test_update_data():
     strified_woc = ','.join(woc)
     key_pair = ("Words_of_concern", strified_woc)
     assert db.update_analysed_data(conditions, key_pair)
+
+# def test_contains():
+#     db = get_connected_db()
+#     assert print(db.contains('404'))
+    
