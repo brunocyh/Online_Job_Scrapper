@@ -36,8 +36,8 @@ class NeuvooSerach(UniversalSearch):
 
                 try:
                     # TODO: to be tested
-                    company = job.find('a', {'class': 'gojob'}).text
-                    title = job.find('span', {'class': 'j-empname-label'}).text
+                    title = job.find('a', {'class': 'gojob'}).text
+                    company = job.find('span', {'class': 'j-empname-label'}).text
                     location = job.find(
                         'div', {'class': 'j-location'}).findAll('span')[0].text
                     add_url = job.find('a', {'class': 'gojob'})[
