@@ -50,7 +50,7 @@ class NeuvooSerach(UniversalSearch):
                     job_builder.set_city(place)
                     job_builder.set_search_engine(self.b_name)
                     job_builder.set_term(term)
-                    job_builder.set_url(add_url)
+                    job_builder.set_url(self.domain + add_url)
 
                     # Stores data only if it didnt exist
                     if not self.database.contains(job_builder.get_id()):

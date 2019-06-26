@@ -43,7 +43,7 @@ class SeekSerach(UniversalSearch):
                     location = job.find(
                         'a', {'data-automation': 'jobArea'}).text
                     add_url = job.find(
-                        'a', {'data-automation': 'jobArea'})['href']
+                        'a', {'data-automation': 'jobArea'})['href'].strip('/')
 
                     job_builder = JobBuilder()
                     job_builder.set_jobtitle(title)
@@ -52,7 +52,7 @@ class SeekSerach(UniversalSearch):
                     job_builder.set_city(place)
                     job_builder.set_search_engine(self.b_name)
                     job_builder.set_term(term)
-                    job_builder.set_url(self.domain + add_url.strip('/'))
+                    job_builder.set_url(self.domain + add_url)
 
                     # Stores data only if it didnt exist
                     if not self.database.contains(job_builder.get_id()):
