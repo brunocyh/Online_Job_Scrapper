@@ -65,6 +65,7 @@ class SeekSerach(UniversalSearch):
                         pass
 
                 except:
+                    job_builder = JobBuilder()
                     job_model = job_builder.build_empty(term, self.b_name, place, self.domain + add_url)
                     self.database.create_data(job_model)
 
