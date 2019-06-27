@@ -26,7 +26,11 @@ def explore_internet():
 
 def download_data():
     retriever = Query()
-    retriever.get_jobs_all().to_csv('job_details.csv', index=False)
+    columns = ["Job_title", "Company", "Location", "City", "Search_eng", "Term", "URL", "Words_of_concern", "created_time"]
+    data = retriever.get_jobs_all(columns)
+    data.sort_values("Company", inplace = True) 
+    data.sort_values("created_time", inplace = True) 
+    data.to_csv('job_details.csv', index=False)
 
 
 if __name__ == "__main__":
