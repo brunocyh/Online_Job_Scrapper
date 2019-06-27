@@ -37,13 +37,13 @@ class IndeedSerach(UniversalSearch):
             for p, job in enumerate(containers):
 
                 try:
+                    add_url = job.find(
+                        'div', {'class': 'title'}).a['href'].strip('/')
                     company = job.find(
                         'div', {'class': 'sjcl'}).div.span.text.strip()
                     title = job.find('div', {'class': 'title'}).a['title']
                     location = job.find(
                         'div', {'class': 'sjcl'}).findAll('span')[1].text
-                    add_url = job.find(
-                        'div', {'class': 'title'}).a['href'].strip('/')
 
                     job_builder = JobBuilder()
                     job_builder.set_jobtitle(title)

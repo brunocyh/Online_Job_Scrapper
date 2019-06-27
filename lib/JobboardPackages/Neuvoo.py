@@ -35,14 +35,13 @@ class NeuvooSerach(UniversalSearch):
             for p, job in enumerate(containers):
 
                 try:
-                    # TODO: to be tested
+                    add_url = job.find('a', {'class': 'gojob'})[
+                        'href'].strip('/')
                     title = job.find('a', {'class': 'gojob'}).text
                     company = job.find(
                         'span', {'class': 'j-empname-label'}).text
                     location = job.find(
                         'div', {'class': 'j-location'}).findAll('span')[0].text
-                    add_url = job.find('a', {'class': 'gojob'})[
-                        'href'].strip('/')
 
                     job_builder = JobBuilder()
                     job_builder.set_jobtitle(title)

@@ -36,14 +36,14 @@ class SeekSerach(UniversalSearch):
             for p, job in enumerate(containers):
 
                 try:
+                    add_url = job.find(
+                        'a', {'data-automation': 'jobArea'})['href'].strip('/')
                     company = job.find(
                         'a', {'data-automation': 'jobCompany'}).text
                     title = job.find(
                         'a', {'data-automation': 'jobTitle'}).text
                     location = job.find(
                         'a', {'data-automation': 'jobArea'}).text
-                    add_url = job.find(
-                        'a', {'data-automation': 'jobArea'})['href'].strip('/')
 
                     job_builder = JobBuilder()
                     job_builder.set_jobtitle(title)
