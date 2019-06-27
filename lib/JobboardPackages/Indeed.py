@@ -70,6 +70,9 @@ class IndeedSerach(UniversalSearch):
                         term, self.b_name, place, self.domain + add_url)
                     self.database.create_data(job_model)
 
+                finally:
+                    self.database.commit()
+
             # Unlock crawler
             self.crawler.unlock()
 

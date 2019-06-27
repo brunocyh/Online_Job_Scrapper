@@ -37,7 +37,8 @@ class NeuvooSerach(UniversalSearch):
                 try:
                     # TODO: to be tested
                     title = job.find('a', {'class': 'gojob'}).text
-                    company = job.find('span', {'class': 'j-empname-label'}).text
+                    company = job.find(
+                        'span', {'class': 'j-empname-label'}).text
                     location = job.find(
                         'div', {'class': 'j-location'}).findAll('span')[0].text
                     add_url = job.find('a', {'class': 'gojob'})[
@@ -64,8 +65,12 @@ class NeuvooSerach(UniversalSearch):
 
                 except:
                     job_builder = JobBuilder()
-                    job_model = job_builder.build_empty(term, self.b_name, place, self.domain + add_url)
+                    job_model = job_builder.build_empty(
+                        term, self.b_name, place, self.domain + add_url)
                     self.database.create_data(job_model)
+
+                finally:
+                    self.database.commit()
 
             # Unlock crawler
             self.crawler.unlock()
