@@ -100,7 +100,7 @@ class JobBuilder():
 
     def get_id(self):
         h = hashlib.md5()
-        txt = self.jobtitle+self.company+self.city+self.url
+        txt = self.jobtitle+self.company+self.city
         h.update(txt.encode())
         return h.hexdigest()
 
