@@ -8,3 +8,4 @@ playground/scrapper_playground.py
 .vscode/settings.json
 .noseids
 lib/DatabaseService/__pycache__/JobDBService.cpython-37.pyc
+playground/select_all.sql
