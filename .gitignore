@@ -4,3 +4,7 @@
 *__pycache__/
 Database/
 job_details*
+playground/scrapper_playground.py
+.vscode/settings.json
+.noseids
+lib/DatabaseService/__pycache__/JobDBService.cpython-37.pyc
