@@ -8,37 +8,7 @@ import time
 If we want to expand this service, we might need to consider using command design pattern. Dont really know how i can impl yet.
 """
 
-
-class IJobDatabase(ABC):
-    @staticmethod
-    def instantiate_Database(): pass
-
-    @abstractmethod
-    def connect(self): pass
-
-    @abstractmethod
-    def disconnect(self): pass
-
-    @abstractmethod
-    def commit(self): pass
-
-    @abstractmethod
-    def reset_table(self, passcode): pass
-
-    @abstractmethod
-    def create_data(self, job_model: JobModel): pass
-
-    @abstractmethod
-    def read_all_data(self, columns): pass
-
-    @abstractmethod
-    def update_analysed_data(self, conditions: tuple, key_pair: tuple): pass
-
-    @abstractmethod
-    def delete_data(self): pass
-
-
-class JobDatabase(IJobDatabase):
+class JobDatabase():
 
     # Singleton DB
     __instance = None

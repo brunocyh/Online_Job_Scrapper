@@ -1,6 +1,0 @@
-There is a need for cross service / component data model. This package stores all the data structures
-various services and components can be used to communicate with each others.
-
-Each model consist of:
-- A Builder class (to help build models step by step)
-- A Model class (the actual structure that is used for communicating with various services)

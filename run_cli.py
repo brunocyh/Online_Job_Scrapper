@@ -1,7 +1,6 @@
 from lib.DatabaseService.JobDBService import JobDatabase
-from lib.OperationsController.CrawlingController import SearchEngine
-from lib.OperationsController.QueryController import Query
-import pandas as pd
+from CrawlingController import SearchEngine
+from lib.DatabaseService.QueryController import Query
 
 
 def reset_db(passcode):
