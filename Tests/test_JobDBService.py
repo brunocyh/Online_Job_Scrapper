@@ -1,6 +1,6 @@
-from lib.DatabaseService.LocalSQLDatabase import JobDatabase
+from DatabaseService.LocalSQLDatabase import JobDatabase
 import random
-from lib.DataModels.JobModel import JobBuilder, JobModel
+from DataModels import JobBuilder, JobModel
 
 
 def get_connected_db():

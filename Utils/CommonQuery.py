@@ -1,4 +1,4 @@
-from lib.DatabaseService.LocalSQLDatabase import JobDatabase
+from DatabaseService.LocalSQLDatabase import JobDatabase
 from pandas import DataFrame
 
 

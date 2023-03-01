@@ -1,6 +1,6 @@
-from lib.DatabaseService.JobDBService import JobDatabase
+from DatabaseService.LocalSQLDatabase import JobDatabase
 from CrawlingController import SearchEngine
-from lib.DatabaseService.QueryController import Query
+from Utils import Query
 
 
 def reset_db(passcode):

@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 import sqlite3
-from lib.DataModels.JobModel import JobModel
+from DataModels.JobModel import JobModel
 import time
 
-from lib.DatabaseService.IDatabase import IDatabase
+from DatabaseService.IDatabase import IDatabase
 
 """
 If we want to expand this service, we might need to consider using command design pattern. Dont really know how i can impl yet.

@@ -1,5 +1,5 @@
-from lib.CrawlerService.CrawlerThread import CrawlerThread
-from lib.DataModels.JobModel import JobModel
+from CrawlerService.CrawlerThread import CrawlerThread
+from DataModels.JobModel import JobModel
 
 
 class SeekCrawler(CrawlerThread):

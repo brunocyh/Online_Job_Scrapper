@@ -1,9 +1,9 @@
-from lib.CrawlerService.Crawler import Crawler
-from lib.DatabaseService.LocalSQLDatabase import JobDatabase
+from CrawlerService import Crawler
+from DatabaseService.LocalSQLDatabase import JobDatabase
 
-from lib.CrawlerService.IndeedCrawler import IndeedSerach
-from lib.CrawlerService.SeekCrawler import SeekSerach
-from lib.CrawlerService.Neuvoo import NeuvooSerach
+from CrawlerService.IndeedCrawler import IndeedSerach
+from CrawlerService.SeekCrawler import SeekSerach
+from CrawlerService import NeuvooSerach
 
 
 def test_integration_indeed():

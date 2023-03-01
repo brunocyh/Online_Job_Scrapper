@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from lib.DataModels.JobModel import JobModel
+from DataModels.JobModel import JobModel
 
 
 class IDatabase(ABC):
