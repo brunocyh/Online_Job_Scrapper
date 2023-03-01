@@ -1,4 +1,4 @@
-from lib.DatabaseService.JobDBService import JobDatabase
+from lib.DatabaseService.LocalSQLDatabase import JobDatabase
 import random
 from lib.DataModels.JobModel import JobBuilder, JobModel
 

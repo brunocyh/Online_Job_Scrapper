@@ -2,18 +2,17 @@ import threading
 
 from lib.CrawlerService.Universal import IJobboardSearch
 from lib.CrawlerService.Crawler import Crawler
-from lib.DatabaseService.JobDBService import JobDatabase
+from lib.DatabaseService.LocalSQLDatabase import JobDatabase
 
 from lib.CrawlerService.SeekCrawler import SeekSerach
 from lib.CrawlerService.IndeedCrawler import IndeedSerach
-from lib.CrawlerService.Neuvoo import NeuvooSerach
 
 
-class SearchEngine():
+class SearchEngine:
 
     # Engines
     db_instance = None
-    engines = [SeekSerach, IndeedSerach, NeuvooSerach]
+    engines = [SeekSerach, IndeedSerach]
     threads = []
     errors = []
 

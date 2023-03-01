@@ -4,7 +4,7 @@ import time
 
 from abc import ABC, abstractmethod
 
-class Crawler():
+class Crawler:
     """
     Crawler is intended to be instantiated once per domain. It supports 
     mechanism that make sure it crawl politely.

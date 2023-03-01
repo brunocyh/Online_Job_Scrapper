@@ -1,8 +1,8 @@
-from lib.DatabaseService.JobDBService import JobDatabase
+from lib.DatabaseService.LocalSQLDatabase import JobDatabase
 from pandas import DataFrame
 
 
-class Query():
+class CommonQuery:
 
     def get_jobs_within_2months(self):
         pass

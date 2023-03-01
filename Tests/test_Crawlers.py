@@ -1,5 +1,5 @@
 from lib.CrawlerService.Crawler import Crawler
-from lib.DatabaseService.JobDBService import JobDatabase
+from lib.DatabaseService.LocalSQLDatabase import JobDatabase
 
 from lib.CrawlerService.IndeedCrawler import IndeedSerach
 from lib.CrawlerService.SeekCrawler import SeekSerach
